@@ -1,6 +1,8 @@
 # nate's todo_s
 
-the simplest local todo list
+simple local todo list
+
+runs locally
 
 built with bun and vite (all typescript)
 
