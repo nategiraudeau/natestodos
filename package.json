@@ -6,7 +6,9 @@
     "dev:web": "vite",
     "dev:api": "bun --watch server.ts",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy:local": "bun run deploy",
+    "deploy": "bun run build && bunx pm2 startOrRestart ecosystem.config.cjs"
   },
   "dependencies": {
     "react": "^19.1.0",

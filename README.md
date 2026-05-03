@@ -139,20 +139,58 @@ x call mom
 
 #### build + deploy (local):
 
+- install deps (if needed):
+
+```bash
+bun install
+```
+
 - build:
 
-```
+```bash
 bun run build
 ```
 
-- deploy latest build to running local services:
+- one-time PM2 setup:
 
+```bash
+cd /path/to/natestodos
+pm2 start ecosystem.config.cjs
+pm2 save
 ```
-pm2 restart natetodos-api
-pm2 restart natetodos-web
+
+- important:
+
+`vite preview` serves built static files only. it does **not** proxy `/api` to `:3001`.
+so for this setup you need a reverse proxy in front of `:4173` that forwards `/api/*` to `http://127.0.0.1:3001`.
+
+- deploy latest build to already-created PM2 services:
+
+```bash
+bun run build
+pm2 restart ecosystem.config.cjs
 pm2 save
 ```
 
 - app url:
 
 `http://127.0.0.1:4173`
+
+- API url:
+
+`http://127.0.0.1:3001/api/todos`
+
+- useful PM2 checks:
+
+```bash
+pm2 status
+pm2 logs natetodos-api
+pm2 logs natetodos-web
+```
+
+- optional: make PM2 restart on machine boot:
+
+```bash
+pm2 startup
+pm2 save
+```
